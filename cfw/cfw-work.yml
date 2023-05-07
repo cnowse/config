@@ -78,16 +78,16 @@ parsers:
 
       commands:
         - proxy-groups.Nodes.proxies=[]proxyNames|^(?!.*(感谢|到期|剩余|充值|.com|官网|流量|返利|刷新)).*
-        - proxy-groups.SG Delay.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))^(?!.*(0.1x)).*
-        - proxy-groups.HK Delay.proxies=[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))^(?!.*(0.1x)).*
-        - proxy-groups.US Delay.proxies=[]proxyNames|(?=.*(美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x)).*
-        - proxy-groups.SG Fallback.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))^(?!.*(0.1x)).*
-        - proxy-groups.HK Fallback.proxies=[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))^(?!.*(0.1x)).*
-        - proxy-groups.US Fallback.proxies=[]proxyNames|(?=.*(美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x)).*
+        - proxy-groups.SG Delay.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))^(?!.*(0.1x|Game)).*
+        - proxy-groups.HK Delay.proxies=[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))^(?!.*(0.1x|Game)).*
+        - proxy-groups.US Delay.proxies=[]proxyNames|(?=.*(美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x|Game)).*
+        - proxy-groups.SG Fallback.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))^(?!.*(0.1x|Game)).*
+        - proxy-groups.HK Fallback.proxies=[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))^(?!.*(0.1x|Game)).*
+        - proxy-groups.US Fallback.proxies=[]proxyNames|(?=.*(美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x|Game)).*
 
-        - proxy-groups.SG.proxies.2+[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))^(?!.*(0.1x)).*
-        - proxy-groups.HK.proxies.2+[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))^(?!.*(0.1x)).*
-        - proxy-groups.US.proxies.2+[]proxyNames|(?=.*(美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x)).*
+        - proxy-groups.SG.proxies.2+[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))^(?!.*(0.1x|Game)).*
+        - proxy-groups.HK.proxies.2+[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))^(?!.*(0.1x|Game)).*
+        - proxy-groups.US.proxies.2+[]proxyNames|(?=.*(美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x|Game)).*
 
       prepend-rules: # 规则由上往下遍历，如上面规则已经命中，则不再往下处理
         - DOMAIN, clash.razord.top, DIRECT
