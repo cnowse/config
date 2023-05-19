@@ -1,5 +1,6 @@
-# kiksong
-# 2023-05-07 15:36
+# Jeong Geol
+# GitHub：http://github.com/kiksong
+# 2023/05/18 10:29
 parsers:
   - reg: ^.*$
     code: |
@@ -13,81 +14,19 @@ parsers:
       prepend-proxy-groups:
         - name: Nodes
           type: select
+        
+        - name: Global
+          type: url-test
+          url: http://www.msftconnecttest.com/connecttest.txt
+          interval: 1800
 
         - name: OpenAI
           type: select
-          proxies:
-            - US
-            - SG
-            - HK
-            
-        - name: Microsoft
-          type: select
-          proxies:
-            - SG
-            - US
-            - DIRECT
-
-        - name: SG
-          type: select
-          proxies:
-            - SG Delay
-            - SG Fallback
-
-        - name: HK
-          type: select
-          proxies:
-            - HK Delay
-            - HK Fallback
-
-        - name: US
-          type: select
-          proxies:
-            - US Fallback
-            - US Delay
-
-        - name: SG Fallback
-          type: fallback
-          url: http://www.msftconnecttest.com/connecttest.txt
-          interval: 1800
-
-        - name: HK Fallback
-          type: fallback
-          url: http://www.msftconnecttest.com/connecttest.txt
-          interval: 1800
-
-        - name: US Fallback
-          type: fallback
-          url: http://www.msftconnecttest.com/connecttest.txt
-          interval: 1800
-
-        - name: SG Delay
-          type: url-test
-          url: http://www.msftconnecttest.com/connecttest.txt
-          interval: 1800
-
-        - name: HK Delay
-          type: url-test
-          url: http://www.msftconnecttest.com/connecttest.txt
-          interval: 1800
-
-        - name: US Delay
-          type: url-test
-          url: http://www.msftconnecttest.com/connecttest.txt
-          interval: 1800
 
       commands:
         - proxy-groups.Nodes.proxies=[]proxyNames|^(?!.*(感谢|到期|剩余|充值|.com|官网|流量|返利|刷新)).*
-        - proxy-groups.SG Delay.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))^(?!.*(0.1x|Game)).*
-        - proxy-groups.HK Delay.proxies=[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))^(?!.*(0.1x|Game)).*
-        - proxy-groups.US Delay.proxies=[]proxyNames|(?=.*(美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x|Game)).*
-        - proxy-groups.SG Fallback.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))^(?!.*(0.1x|Game)).*
-        - proxy-groups.HK Fallback.proxies=[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))^(?!.*(0.1x|Game)).*
-        - proxy-groups.US Fallback.proxies=[]proxyNames|(?=.*(美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x|Game)).*
-
-        - proxy-groups.SG.proxies.2+[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))^(?!.*(0.1x|Game)).*
-        - proxy-groups.HK.proxies.2+[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))^(?!.*(0.1x|Game)).*
-        - proxy-groups.US.proxies.2+[]proxyNames|(?=.*(美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x|Game)).*
+        - proxy-groups.Global.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城|🇭🇰|香港|\bHK|\bHKG|\bHong|日本|\bJP|Japan|\bTW|台湾|\bTai))^(?!.*(0.1x|Game)).*
+        - proxy-groups.OpenAI.proxies=[]proxyNames|(?=.*(美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x|Game)).*
 
       prepend-rules: # 规则由上往下遍历，如上面规则已经命中，则不再往下处理
         - DOMAIN, clash.razord.top, DIRECT
@@ -98,14 +37,14 @@ parsers:
         - RULE-SET, BanAD, REJECT
         - RULE-SET, BanProgramAD, REJECT
         - RULE-SET, OpenAI, OpenAI
-        - RULE-SET, Microsoft, Microsoft
+        - RULE-SET, Microsoft, DIRECT
         - RULE-SET, ChinaDomain, DIRECT
         - RULE-SET, ChinaMedia, DIRECT
         - RULE-SET, ChinaCompanyIp, DIRECT
         - RULE-SET, ChinaIp, DIRECT
-        - RULE-SET, Global, SG
+        - RULE-SET, Global, Global
         - GEOIP,CN, DIRECT
-        - MATCH, SG
+        - MATCH, Global
 
       mix-rule-providers:
         LocalAreaNetwork:
