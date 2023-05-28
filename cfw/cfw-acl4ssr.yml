@@ -1,5 +1,5 @@
-# 作者：walls1717
-# 2023-04-21 10:10
+# 作者：Jeong Geol
+# 2023-05-28 11:05
 # =========================
 parsers:
   - reg: ^.*$
@@ -15,71 +15,24 @@ parsers:
         - name: Nodes
           type: select
 
-        - name: Bilibili
-          type: select
-          proxies:
-            - HK
-            - DIRECT
-        
-        - name: YouTube
-          type: select
-          proxies:
-            - HK
-            - SG
-
-        - name: Spotify
-          type: select
-          proxies:
-            - SG
-            - HK
-            - DIRECT
-
-        - name: OpenAI
-          type: select
-          proxies:
-            - US
-            - SG
-            - HK
+        # - name: Bilibili
+        #   type: select
+        #   proxies:
+        #     - HK
+        #     - DIRECT
             
-        - name: Microsoft
-          type: select
-          proxies:
-            - SG
-            - US
-            - DIRECT
-
         - name: SG
           type: select
           proxies:
             - SG Delay
-            - SG Fallback
 
         - name: HK
           type: select
           proxies:
             - HK Delay
-            - HK Fallback
 
         - name: US
           type: select
-          proxies:
-            - US Fallback
-            - US Delay
-
-        - name: SG Fallback
-          type: fallback
-          url: http://www.msftconnecttest.com/connecttest.txt
-          interval: 1800
-
-        - name: HK Fallback
-          type: fallback
-          url: http://www.msftconnecttest.com/connecttest.txt
-          interval: 1800
-
-        - name: US Fallback
-          type: fallback
-          url: http://www.msftconnecttest.com/connecttest.txt
-          interval: 1800
 
         - name: SG Delay
           type: url-test
@@ -91,19 +44,11 @@ parsers:
           url: http://www.msftconnecttest.com/connecttest.txt
           interval: 1800
 
-        - name: US Delay
-          type: url-test
-          url: http://www.msftconnecttest.com/connecttest.txt
-          interval: 1800
-
       commands:
         - proxy-groups.Nodes.proxies=[]proxyNames|^(?!.*(感谢|到期|剩余|充值|.com|官网|流量|返利|刷新)).*
         - proxy-groups.SG Delay.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))
         - proxy-groups.HK Delay.proxies=[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))
         - proxy-groups.US Delay.proxies=[]proxyNames|(?=.*(美国|\bUS|\bUnited|\bUSA))
-        - proxy-groups.SG Fallback.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))
-        - proxy-groups.HK Fallback.proxies=[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))
-        - proxy-groups.US Fallback.proxies=[]proxyNames|(?=.*(美国|\bUS|\bUnited|\bUSA))
 
         - proxy-groups.SG.proxies.2+[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))
         - proxy-groups.HK.proxies.2+[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))
@@ -114,21 +59,22 @@ parsers:
         - DOMAIN, yacd.haishan.me, DIRECT
         - RULE-SET, UnBan, DIRECT
         - RULE-SET, LocalAreaNetwork, DIRECT
+        - DOMAIN-SUFFIX, sentry.io, REJECT
         - RULE-SET, anti-ad, REJECT
         - RULE-SET, BanAD, REJECT
         - RULE-SET, BanProgramAD, REJECT
-        - RULE-SET, OpenAI, OpenAI
-        - RULE-SET, YouTube, YouTube
-        - RULE-SET, YouTubeMusic, YouTube
-        - RULE-SET, Spotify, Spotify
-        - RULE-SET, Microsoft, Microsoft
-        - RULE-SET, Bilibili, Bilibili
+        - RULE-SET, OpenAI, US
+        - RULE-SET, YouTube, HK
+        - RULE-SET, YouTubeMusic, HK
+        - RULE-SET, Spotify, HK
+        - RULE-SET, Microsoft, DIRECT
+        # - RULE-SET, Bilibili, Bilibili
         - RULE-SET, ChinaDomain, DIRECT
         - RULE-SET, ChinaMedia, DIRECT
         - RULE-SET, ChinaCompanyIp, DIRECT
         - RULE-SET, ChinaIp, DIRECT
         - RULE-SET, Global, SG
-        - GEOIP,CN, DIRECT
+        - GEOIP, CN, DIRECT
         - MATCH, SG
 
       mix-rule-providers:
