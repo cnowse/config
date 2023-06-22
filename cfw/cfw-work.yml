@@ -1,6 +1,6 @@
 # Jeong Geol
-# GitHub：http://github.com/kiksong
-# 2023/05/18 10:29
+# GitHub：http://github.com/cnowse
+# 2023-06-22 23:27
 parsers:
   - reg: ^.*$
     code: |
@@ -12,25 +12,41 @@ parsers:
       }
     yaml:
       prepend-proxy-groups:
-        - name: Nodes
-          type: select
-        
+        # - name: Nodes
+        #   type: select
         - name: Global
+          type: select
+          proxies:
+            - Nodes-Test
+            - Nodes-Select
+
+        - name: Nodes-Select
+          type: select
+
+        - name: Nodes-Test
           type: url-test
           url: http://www.msftconnecttest.com/connecttest.txt
           interval: 1800
+        
+        # - name: Global
+        #   type: url-test
+        #   url: http://www.msftconnecttest.com/connecttest.txt
+        #   interval: 1800
 
         - name: OpenAI
           type: select
 
       commands:
-        - proxy-groups.Nodes.proxies=[]proxyNames|^(?!.*(感谢|到期|剩余|充值|.com|官网|流量|返利|刷新)).*
-        - proxy-groups.Global.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城|🇭🇰|香港|\bHK|\bHKG|\bHong|日本|\bJP|Japan|\bTW|台湾|\bTai))^(?!.*(0.1x|Game)).*
+        # - proxy-groups.Nodes.proxies=[]proxyNames|^(?!.*(感谢|到期|剩余|充值|.com|官网|流量|返利|刷新)).*
+        - proxy-groups.Nodes-Select.proxies=[]proxyNames|^(?!.*(感谢|到期|剩余|充值|.com|官网|流量|返利|刷新)).*
+        # - proxy-groups.Global.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城|🇭🇰|香港|\bHK|\bHKG|\bHong|日本|\bJP|Japan|\bTW|台湾|\bTai))^(?!.*(0.1x|Game)).*
+        - proxy-groups.Nodes-Test.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城|🇭🇰|香港|\bHK|\bHKG|\bHong|日本|\bJP|Japan|\bTW|台湾|\bTai))^(?!.*(0.1x|Game)).*
         - proxy-groups.OpenAI.proxies=[]proxyNames|(?=.*(美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x|Game)).*
 
       prepend-rules: # 规则由上往下遍历，如上面规则已经命中，则不再往下处理
         - DOMAIN, clash.razord.top, DIRECT
         - DOMAIN, yacd.haishan.me, DIRECT
+        - DOMAIN-SUFFIX, oracle.com, Global
         - RULE-SET, UnBan, DIRECT
         - RULE-SET, LocalAreaNetwork, DIRECT
         - RULE-SET, anti-ad, REJECT

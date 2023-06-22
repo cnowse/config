@@ -1,6 +1,6 @@
-# 作者：Jeong Geol
-# 2023-05-28 11:05
-# =========================
+# Jeong Geol
+# GitHub：http://github.com/cnowse
+# 2023-06-22 23:27
 parsers:
   - reg: ^.*$
     code: |
@@ -60,6 +60,7 @@ parsers:
         - RULE-SET, UnBan, DIRECT
         - RULE-SET, LocalAreaNetwork, DIRECT
         - DOMAIN-SUFFIX, sentry.io, REJECT
+        - DOMAIN-SUFFIX, oracle.com, SG
         - RULE-SET, anti-ad, REJECT
         - RULE-SET, BanAD, REJECT
         - RULE-SET, BanProgramAD, REJECT
