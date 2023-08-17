@@ -14,12 +14,6 @@ parsers:
       prepend-proxy-groups:
         - name: Nodes
           type: select
-
-        # - name: Bilibili
-        #   type: select
-        #   proxies:
-        #     - HK
-        #     - DIRECT
             
         - name: SG
           type: select
@@ -34,12 +28,12 @@ parsers:
         - name: US
           type: select
 
-        - name: SG Delay
+        - name: SG-Delay
           type: url-test
           url: http://www.msftconnecttest.com/connecttest.txt
           interval: 1800
 
-        - name: HK Delay
+        - name: HK-Delay
           type: url-test
           url: http://www.msftconnecttest.com/connecttest.txt
           interval: 1800
@@ -69,7 +63,6 @@ parsers:
         - RULE-SET, YouTubeMusic, HK
         - RULE-SET, Spotify, HK
         - RULE-SET, Microsoft, DIRECT
-        # - RULE-SET, Bilibili, Bilibili
         - RULE-SET, ChinaDomain, DIRECT
         - RULE-SET, ChinaMedia, DIRECT
         - RULE-SET, ChinaCompanyIp, DIRECT
