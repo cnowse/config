@@ -1,4 +1,5 @@
-# CJ
+# Author：CJ
+# description：make for DHB
 parsers:
   - reg: ^.*$
     code: |
@@ -35,7 +36,14 @@ parsers:
       prepend-rules:
         - DOMAIN, clash.razord.top, DIRECT
         - DOMAIN, yacd.haishan.me, DIRECT
+        # ---
+        - DOMAIN, mirror.beon.co.id, Global
+        - DOMAIN, mirror.cepatcloud.id, Global
+        - DOMAIN, mirrors.gbnetwork.com, Global
         - DOMAIN-SUFFIX, oracle.com, Global
+        - DOMAIN-SUFFIX, apache.org, Global
+        - DOMAIN-SUFFIX, jetbrains.com, Global
+        # ---
         - RULE-SET, UnBan, DIRECT
         - RULE-SET, LocalAreaNetwork, DIRECT
         - RULE-SET, anti-ad, REJECT
@@ -65,7 +73,7 @@ parsers:
           url: "https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/UnBan.yaml"
           path: ./ruleset/UnBan.yaml
           interval: 86400
-        
+
         anti-ad:
           type: http
           behavior: domain
@@ -121,7 +129,7 @@ parsers:
           url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml"
           path: ./ruleset/Microsoft.yaml
           interval: 86400
-        
+
         OpenAI:
           type: http
           behavior: classical
