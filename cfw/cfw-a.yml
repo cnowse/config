@@ -1,0 +1,103 @@
+# Author：Jeong Geol
+# GitHub：http://github.com/cnowse
+# Date：2023-12-14
+# Description：Domestic requests use GEOIP, foreign requests use final.
+# GEOIP: IPV4 https://github.com/Hackl0us/GeoIP2-CN/raw/release/Country.mmdb; IPV4+IPV6 https://gitlab.com/Masaiki/GeoIP2-CN/-/raw/release/Country.mmdb
+# How to use GEOIP?
+# 1.Download Country.mmdb
+# 2.General -> Home Directory -> Open Folder -> replace Country.mmdb
+# Attention: Don't use secure DNS in the Chrome browser, otherwise all domain names will be resolved into IPs in advance, causing the diversion rules to become invalid.
+parsers:
+  - reg: ^.*$
+    code: |
+      module.exports.parse = (raw, { yaml }) => {
+        const rawObj = yaml.parse(raw)
+        const groups = []
+        const rules = []
+        return yaml.stringify({ ...rawObj, 'proxy-groups': groups, rules })
+      }
+    yaml:
+      prepend-proxy-groups:
+        - name: Proxy
+          type: select
+
+        - name: Global
+          type: select
+          proxies:
+            - Proxy
+            - Delay
+
+        - name: Delay
+          type: url-test
+          url: http://www.msftconnecttest.com/connecttest.txt
+          interval: 1800
+
+        - name: OpenAI
+          type: select
+
+      commands:
+        - proxy-groups.Proxy.proxies=[]proxyNames|^(?!.*(感谢|到期|剩余|充值|.com|官网|流量|返利|刷新)).*
+        - proxy-groups.Delay.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城|🇭🇰|香港|\bHK|\bHKG|\bHong|日本|\bJP|Japan|\bTW|台湾|\bTai))^(?!.*(0.1x|Game)).*
+        - proxy-groups.OpenAI.proxies=[]proxyNames|(?=.*(美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x|Game)).*
+        - proxy-groups.Global.proxies.2+[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城|🇭🇰|香港|\bHK|\bHKG|\bHong|日本|\bJP|Japan|\bTW|台湾|\bTai))^(?!.*(0.1x|Game)).*
+
+      prepend-rules:
+        - RULE-SET, Lan, DIRECT
+        - RULE-SET, anti-ad, REJECT
+        - RULE-SET, Microsoft, DIRECT
+        - RULE-SET, Bing, Global
+        - RULE-SET, OpenAI, OpenAI
+        - RULE-SET, Jetbrains, Global
+        - RULE-SET, Spotify, Proxy
+        - GEOIP, CN, DIRECT
+        - MATCH, Global
+
+      mix-rule-providers:
+        Lan:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan_No_Resolve.yaml"
+          path: ./ruleset/Lan.yaml
+          interval: 86400
+
+        anti-ad:
+          type: http
+          behavior: domain
+          url: "https://anti-ad.net/clash.yaml"
+          path: ./ruleset/antiad.yaml
+          interval: 86400
+
+        Microsoft:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft_No_Resolve.yaml"
+          path: ./ruleset/Microsoft.yaml
+          interval: 86400
+
+        Bing:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Bing/Bing_No_Resolve.yaml"
+          path: ./ruleset/Bing.yaml
+          interval: 86400
+
+        OpenAI:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OpenAI/OpenAI_No_Resolve.yaml"
+          path: ./ruleset/OpenAI.yml
+          interval: 86400
+
+        Jetbrains:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Jetbrains/Jetbrains_No_Resolve.yaml"
+          path: ./ruleset/Jetbrains.yml
+          interval: 86400
+
+        Spotify:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Spotify/Spotify_No_Resolve.yaml"
+          path: ./ruleset/Spotify.yml
+          interval: 86400
