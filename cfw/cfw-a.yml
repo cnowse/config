@@ -1,12 +1,11 @@
 # Author：Jeong Geol
 # GitHub：http://github.com/cnowse
-# Date：2023-12-14
+# Date：2023-12-23
 # Description：Domestic requests use GEOIP, foreign requests use final.
 # GEOIP: IPV4 https://github.com/Hackl0us/GeoIP2-CN/raw/release/Country.mmdb; IPV4+IPV6 https://gitlab.com/Masaiki/GeoIP2-CN/-/raw/release/Country.mmdb
 # How to use GEOIP?
 # 1.Download Country.mmdb
 # 2.General -> Home Directory -> Open Folder -> replace Country.mmdb
-# Attention: Don't use secure DNS in the Chrome browser, otherwise all domain names will be resolved into IPs in advance, causing the diversion rules to become invalid.
 parsers:
   - reg: ^.*$
     code: |
@@ -44,8 +43,8 @@ parsers:
       prepend-rules:
         - RULE-SET, Lan, DIRECT
         - RULE-SET, anti-ad, REJECT
+        - RULE-SET, Bing, OpenAI
         - RULE-SET, Microsoft, DIRECT
-        - RULE-SET, Bing, Global
         - RULE-SET, OpenAI, OpenAI
         - RULE-SET, Jetbrains, Global
         - RULE-SET, Spotify, Proxy
