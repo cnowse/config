@@ -1,0 +1,187 @@
+# Author：Jeong Geol
+# GitHub：http://github.com/cnowse
+# Date：2024-02-27
+# Description：Domestic requests use GEOIP, foreign requests use final.
+# GEOIP: IPV4 https://github.com/Hackl0us/GeoIP2-CN/raw/release/Country.mmdb; IPV4+IPV6 https://gitlab.com/Masaiki/GeoIP2-CN/-/raw/release/Country.mmdb
+# How to use GEOIP?
+# 1.Download Country.mmdb
+# 2.General -> Home Directory -> Open Folder -> replace Country.mmdb
+parsers:
+  - reg: ^.*$
+    code: |
+      module.exports.parse = (raw, { yaml }) => {
+        const rawObj = yaml.parse(raw)
+        const groups = []
+        const rules = []
+        return yaml.stringify({ ...rawObj, 'proxy-groups': groups, rules })
+      }
+    yaml:
+      prepend-proxy-groups:
+        - name: Proxy
+          type: select
+
+        - name: Using
+          type: select
+          proxies:
+            - 🇸🇬 SG
+            - 🇭🇰 HK
+            - 🇺🇸 US
+            - 🇯🇵 JP
+            - Proxy
+
+        - name: OpenAI
+          type: select
+          proxies:
+            - 🇺🇸 US
+            - 🇸🇬 SG
+
+        - name: Copilot
+          type: select
+          proxies:
+            - 🇺🇸 US
+            - 🇸🇬 SG
+
+        - name: Spotify
+          type: select
+          proxies:
+            - 🇸🇬 SG
+            - 🇭🇰 HK
+            - 🇯🇵 JP
+
+        - name: 🇸🇬 SG
+          type: select
+          proxies:
+            - 🇸🇬 SG Delay
+
+        - name: 🇭🇰 HK
+          type: select
+          proxies:
+            - 🇭🇰 HK Delay
+
+        - name: 🇺🇸 US
+          type: select
+          proxies:
+            - 🇺🇸 US Delay
+
+        - name: 🇯🇵 JP
+          type: select
+          proxies:
+            - 🇯🇵 JP Delay
+
+        - name: 🇸🇬 SG Delay
+          type: url-test
+          url: http://www.msftconnecttest.com/connecttest.txt
+          interval: 1800
+
+        - name: 🇭🇰 HK Delay
+          type: url-test
+          url: http://www.msftconnecttest.com/connecttest.txt
+          interval: 1800
+
+        - name: 🇺🇸 US Delay
+          type: url-test
+          url: http://www.msftconnecttest.com/connecttest.txt
+          interval: 1800
+
+        - name: 🇯🇵 JP Delay
+          type: url-test
+          url: http://www.msftconnecttest.com/connecttest.txt
+          interval: 1800
+
+      commands:
+        - proxy-groups.Proxy.proxies=[]proxyNames|^(?!.*(感谢|到期|剩余|充值|.com|官网|流量|返利|刷新)).*
+
+        - proxy-groups.🇸🇬 SG Delay.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))^(?!.*(0.1x|Game)).*
+        - proxy-groups.🇭🇰 HK Delay.proxies=[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))^(?!.*(0.1x|Game)).*
+        - proxy-groups.🇺🇸 US Delay.proxies=[]proxyNames|(?=.*(🇺🇸|美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x|Game)).*
+        - proxy-groups.🇯🇵 JP Delay.proxies=[]proxyNames|(?=.*(🇯🇵|日本|\bJP|\bJapan|\bJapanese))^(?!.*(0.1x|Game)).*
+
+        - proxy-groups.🇸🇬 SG.proxies.2+[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))^(?!.*(0.1x|Game)).*
+        - proxy-groups.🇭🇰 HK.proxies.2+[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))^(?!.*(0.1x|Game)).*
+        - proxy-groups.🇺🇸 US.proxies.2+[]proxyNames|(?=.*(🇺🇸|美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x|Game)).*
+        - proxy-groups.🇯🇵 JP.proxies.2+[]proxyNames|(?=.*(🇯🇵|日本|\bJP|\bJapan|\bJapanese))^(?!.*(0.1x|Game)).*
+
+      prepend-rules:
+        - RULE-SET, Lan, DIRECT
+        - RULE-SET, anti-ad, REJECT
+        - RULE-SET, Bing, Copilot
+        - RULE-SET, Copilot, Copilot
+        - RULE-SET, YouTube, Using
+        - RULE-SET, YouTubeMusic, Using
+        - RULE-SET, Microsoft, DIRECT
+        - RULE-SET, OpenAI, OpenAI
+        - RULE-SET, Jetbrains, Using
+        - RULE-SET, Spotify, Spotify
+        - GEOIP, CN, DIRECT
+        - MATCH, Using
+
+      mix-rule-providers:
+        Lan:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan_No_Resolve.yaml"
+          path: ./ruleset/Lan.yaml
+          interval: 86400
+
+        anti-ad:
+          type: http
+          behavior: domain
+          url: "https://anti-ad.net/clash.yaml"
+          path: ./ruleset/antiad.yaml
+          interval: 86400
+
+        Microsoft:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft_No_Resolve.yaml"
+          path: ./ruleset/Microsoft.yaml
+          interval: 86400
+
+        Bing:
+          type: http
+          behavior: classical
+          url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bing/Bing_No_Resolve.yaml"
+          path: ./ruleset/Bing.yaml
+          interval: 86400
+
+        Copilot:
+          type: http
+          behavior: classical
+          url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Copilot/Copilot_No_Resolve.yaml"
+          path: ./ruleset/Copilot.yaml
+          interval: 86400
+
+        OpenAI:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OpenAI/OpenAI_No_Resolve.yaml"
+          path: ./ruleset/OpenAI.yml
+          interval: 86400
+
+        Jetbrains:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Jetbrains/Jetbrains_No_Resolve.yaml"
+          path: ./ruleset/Jetbrains.yml
+          interval: 86400
+
+        Spotify:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Spotify/Spotify_No_Resolve.yaml"
+          path: ./ruleset/Spotify.yml
+          interval: 86400
+
+        YouTube:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/YouTube/YouTube.yaml"
+          path: ./ruleset/YouTube.yml
+          interval: 86400
+
+        YouTubeMusic:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/YouTubeMusic/YouTubeMusic.yaml"
+          path: ./ruleset/YouTubeMusic.yml
+          interval: 86400
