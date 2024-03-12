@@ -1,6 +1,6 @@
 # Author：Jeong Geol
 # GitHub：http://github.com/cnowse
-# Date：2024-01-25
+# Date：2024-3-12
 # Description：Domestic requests use GEOIP, foreign requests use final.
 # GEOIP: IPV4 https://github.com/Hackl0us/GeoIP2-CN/raw/release/Country.mmdb; IPV4+IPV6 https://gitlab.com/Masaiki/GeoIP2-CN/-/raw/release/Country.mmdb
 # How to use GEOIP?
@@ -17,54 +17,103 @@ parsers:
       }
     yaml:
       prepend-proxy-groups:
+        - name: Nodes
+          type: select
+
         - name: Proxy
           type: select
-
-        - name: SG
+          proxies:
+            - 🇸🇬 SG
+            - 🇭🇰 HK
+            - 🇯🇵 JP
+            - 🇺🇸 US
+            - Nodes
+        
+        - name: OpenAI
           type: select
           proxies:
-            - SG Delay
+            - 🇺🇸 US
+            - 🇸🇬 SG
 
-        - name: HK
+        - name: Copilot
           type: select
           proxies:
-            - HK Delay
+            - 🇺🇸 US
+            - 🇸🇬 SG
 
-        - name: US
+        - name: Spotify
           type: select
+          proxies:
+            - 🇸🇬 SG
+            - 🇭🇰 HK
+            - 🇯🇵 JP
 
-        - name: SG Delay
+        - name: 🇸🇬 SG
+          type: select
+          proxies:
+            - 🇸🇬 SG Delay
+
+        - name: 🇭🇰 HK
+          type: select
+          proxies:
+            - 🇭🇰 HK Delay
+
+        - name: 🇺🇸 US
+          type: select
+          proxies:
+            - 🇺🇸 US Delay
+
+        - name: 🇯🇵 JP
+          type: select
+          proxies:
+            - 🇯🇵 JP Delay
+
+        - name: 🇸🇬 SG Delay
           type: url-test
           url: http://www.msftconnecttest.com/connecttest.txt
           interval: 1800
 
-        - name: HK Delay
+        - name: 🇭🇰 HK Delay
+          type: url-test
+          url: http://www.msftconnecttest.com/connecttest.txt
+          interval: 1800
+
+        - name: 🇺🇸 US Delay
+          type: url-test
+          url: http://www.msftconnecttest.com/connecttest.txt
+          interval: 1800
+
+        - name: 🇯🇵 JP Delay
           type: url-test
           url: http://www.msftconnecttest.com/connecttest.txt
           interval: 1800
 
       commands:
-        - proxy-groups.Proxy.proxies=[]proxyNames|^(?!.*(感谢|到期|剩余|充值|.com|官网|流量|返利|刷新)).*
-        - proxy-groups.SG Delay.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))^(?!.*(0.1x|Game)).*
-        - proxy-groups.HK Delay.proxies=[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))^(?!.*(0.1x|Game)).*
-        - proxy-groups.US.proxies=[]proxyNames|(?=.*(美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x|Game)).*
+        - proxy-groups.Nodes.proxies=[]proxyNames|^(?!.*(感谢|到期|剩余|充值|.com|官网|流量|返利|刷新)).*
 
-        - proxy-groups.SG.proxies.2+[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))^(?!.*(0.1x|Game)).*
-        - proxy-groups.HK.proxies.2+[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))^(?!.*(0.1x|Game)).*
+        - proxy-groups.🇸🇬 SG Delay.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))^(?!.*(0.1x|Game)).*
+        - proxy-groups.🇭🇰 HK Delay.proxies=[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))^(?!.*(0.1x|Game)).*
+        - proxy-groups.🇯🇵 JP Delay.proxies=[]proxyNames|(?=.*(🇯🇵|日本|\bJP|\bJapan|\bJapanese))^(?!.*(0.1x|Game)).*
+        - proxy-groups.🇺🇸 US Delay.proxies=[]proxyNames|(?=.*(🇺🇸|美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x|Game)).*
+
+        - proxy-groups.🇸🇬 SG.proxies.2+[]proxyNames|(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))^(?!.*(0.1x|Game)).*
+        - proxy-groups.🇭🇰 HK.proxies.2+[]proxyNames|(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))^(?!.*(0.1x|Game)).*
+        - proxy-groups.🇯🇵 JP.proxies.2+[]proxyNames|(?=.*(🇯🇵|日本|\bJP|\bJapan|\bJapanese))^(?!.*(0.1x|Game)).*
+        - proxy-groups.🇺🇸 US.proxies.2+[]proxyNames|(?=.*(🇺🇸|美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x|Game)).*
 
       prepend-rules:
         - RULE-SET, Lan, DIRECT
         - RULE-SET, anti-ad, REJECT
-        - RULE-SET, Bing, US
-        - RULE-SET, Copilot, US
-        - RULE-SET, YouTube, SG
-        - RULE-SET, YouTubeMusic, SG
+        - RULE-SET, Bing, Copilot
+        - RULE-SET, Copilot, Copilot
+        - RULE-SET, YouTube, Proxy
+        - RULE-SET, YouTubeMusic, Proxy
         - RULE-SET, Microsoft, DIRECT
-        - RULE-SET, OpenAI, US
-        - RULE-SET, Jetbrains, SG
-        - RULE-SET, Spotify, HK
+        - RULE-SET, OpenAI, OpenAI
+        - RULE-SET, Jetbrains, Proxy
+        - RULE-SET, Spotify, Spotify
         - GEOIP, CN, DIRECT
-        - MATCH, SG
+        - MATCH, Proxy
 
       mix-rule-providers:
         Lan:
