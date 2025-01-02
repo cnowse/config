@@ -141,16 +141,9 @@ function main(config) {
   config["proxy-groups"] = [
     {
       ...groupBaseOption,
-      "name": "Proxy",
-      "type": "select",
-      "include-all": true,
-      "icon": "https://raw.githubusercontent.com/clash-verge-rev/clash-verge-rev.github.io/refs/heads/main/docs/assets/icons/linux.svg"
-    },
-    {
-      ...groupBaseOption,
       "name": "Using",
       "type": "select",
-      "proxies": ["SG", "HK", "US", "JP", "Proxy"],
+      "proxies": ["SG", "HK", "US", "JP"],
       "include-all": true,
       "icon": "https://raw.githubusercontent.com/clash-verge-rev/clash-verge-rev.github.io/refs/heads/main/docs/assets/icons/fish.svg"
     },
@@ -159,7 +152,7 @@ function main(config) {
       "name": "OpenAI",
       "type": "select",
       "proxies": ["US", "SG"],
-      "include-all": true,
+      // "include-all": true,
       "icon": "https://raw.githubusercontent.com/clash-verge-rev/clash-verge-rev.github.io/refs/heads/main/docs/assets/icons/chatgpt.svg"
     },
     {
@@ -167,7 +160,7 @@ function main(config) {
       "name": "Copilot",
       "type": "select",
       "proxies": ["US", "SG"],
-      "include-all": true,
+      // "include-all": true,
       "icon": "https://raw.githubusercontent.com/clash-verge-rev/clash-verge-rev.github.io/refs/heads/main/docs/assets/icons/bing.svg"
     },
     // {
