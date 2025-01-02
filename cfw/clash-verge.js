@@ -109,7 +109,7 @@ const rules = [
   "RULE-SET, Microsoft, DIRECT",
   "RULE-SET, OpenAI, OpenAI",
   "RULE-SET, Jetbrains, Using",
-  "RULE-SET, Spotify, Spotify",
+  "RULE-SET, Spotify, JP",
   // 其他规则
   "GEOIP, LAN, DIRECT, no-resolve",
   "GEOIP, CN, DIRECT, no-resolve",
@@ -144,7 +144,7 @@ function main(config) {
       "name": "Proxy",
       "type": "select",
       "include-all": true,
-      //"icon": "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/adjust.svg"
+      "icon": "https://raw.githubusercontent.com/clash-verge-rev/clash-verge-rev.github.io/refs/heads/main/docs/assets/icons/linux.svg"
     },
     {
       ...groupBaseOption,
@@ -152,7 +152,7 @@ function main(config) {
       "type": "select",
       "proxies": ["SG", "HK", "US", "JP", "Proxy"],
       "include-all": true,
-      //"icon": "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/speed.svg"
+      "icon": "https://raw.githubusercontent.com/clash-verge-rev/clash-verge-rev.github.io/refs/heads/main/docs/assets/icons/fish.svg"
     },
     {
       ...groupBaseOption,
@@ -160,7 +160,7 @@ function main(config) {
       "type": "select",
       "proxies": ["US", "SG"],
       "include-all": true,
-      //"icon": "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/ambulance.svg"
+      "icon": "https://raw.githubusercontent.com/clash-verge-rev/clash-verge-rev.github.io/refs/heads/main/docs/assets/icons/chatgpt.svg"
     },
     {
       ...groupBaseOption,
@@ -168,16 +168,16 @@ function main(config) {
       "type": "select",
       "proxies": ["US", "SG"],
       "include-all": true,
-      //"icon": "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/merry_go.svg"
+      "icon": "https://raw.githubusercontent.com/clash-verge-rev/clash-verge-rev.github.io/refs/heads/main/docs/assets/icons/bing.svg"
     },
-    {
-      ...groupBaseOption,
-      "name": "Spotify",
-      "type": "select",
-      "proxies": ["SG", "HK", "JP"],
-      "include-all": true,
-      // "icon": "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/balance.svg"
-    },
+    // {
+    //   ...groupBaseOption,
+    //   "name": "Spotify",
+    //   "type": "select",
+    //   "proxies": ["SG", "HK", "JP"],
+    //   "include-all": true,
+    //   // "icon": "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/balance.svg"
+    // },
     {
       ...groupBaseOption,
       "name": "SG",
@@ -185,7 +185,7 @@ function main(config) {
       "proxies": ["SG Delay"],
       "include-all": true,
       "filter": "(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))^(?!.*(0.1x|Game)).*",
-      // "icon": "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/google.svg"
+      "icon": "https://raw.githubusercontent.com/clash-verge-rev/clash-verge-rev.github.io/refs/heads/main/docs/assets/icons/flags/sg.svg"
     },
     {
       ...groupBaseOption,
@@ -194,7 +194,7 @@ function main(config) {
       "proxies": ["HK Delay"],
       "include-all": true,
       "filter": "(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))^(?!.*(0.1x|Game)).*",
-      // "icon": "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/youtube.svg"
+      "icon": "https://raw.githubusercontent.com/clash-verge-rev/clash-verge-rev.github.io/refs/heads/main/docs/assets/icons/flags/hk.svg"
     },
     {
       ...groupBaseOption,
@@ -203,7 +203,7 @@ function main(config) {
       "proxies": ["US Delay"],
       "include-all": true,
       "filter": "(?=.*(🇺🇸|美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x|Game)).*",
-      // "icon": "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/telegram.svg"
+      "icon": "https://raw.githubusercontent.com/clash-verge-rev/clash-verge-rev.github.io/refs/heads/main/docs/assets/icons/flags/us.svg"
     },
     {
       ...groupBaseOption,
@@ -212,7 +212,7 @@ function main(config) {
       "proxies": ["JP Delay"],
       "include-all": true,
       "filter": "(?=.*(🇯🇵|日本|\bJP|\bJapan|\bJapanese))^(?!.*(0.1x|Game)).*",
-      // "icon": "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/chatgpt.svg"
+      "icon": "https://raw.githubusercontent.com/clash-verge-rev/clash-verge-rev.github.io/refs/heads/main/docs/assets/icons/flags/jp.svg"
     },
     {
       ...groupBaseOption,
@@ -221,7 +221,7 @@ function main(config) {
       "tolerance": 100,
       "include-all": true,
       "filter": "(?=.*(🇸🇬|新加坡|\bSG|\bSGP|\bSingapore|狮城))^(?!.*(0.1x|Game)).*",
-      // "icon": "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/microsoft.svg"
+      "icon": "https://raw.githubusercontent.com/clash-verge-rev/clash-verge-rev.github.io/refs/heads/main/docs/assets/icons/flags/sg.svg"
     },
     {
       ...groupBaseOption,
@@ -230,7 +230,7 @@ function main(config) {
       "tolerance": 100,
       "include-all": true,
       "filter": "(?=.*(🇭🇰|香港|\bHK|\bHKG|\bHong))^(?!.*(0.1x|Game)).*",
-      // "icon": "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/microsoft.svg"
+      "icon": "https://raw.githubusercontent.com/clash-verge-rev/clash-verge-rev.github.io/refs/heads/main/docs/assets/icons/flags/hk.svg"
     },
     {
       ...groupBaseOption,
@@ -239,7 +239,7 @@ function main(config) {
       "tolerance": 100,
       "include-all": true,
       "filter": "(?=.*(🇺🇸|美国|\bUS|\bUnited|\bUSA))^(?!.*(0.1x|Game)).*",
-      // "icon": "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/microsoft.svg"
+      "icon": "https://raw.githubusercontent.com/clash-verge-rev/clash-verge-rev.github.io/refs/heads/main/docs/assets/icons/flags/us.svg"
     },
     {
       ...groupBaseOption,
@@ -248,7 +248,7 @@ function main(config) {
       "tolerance": 100,
       "include-all": true,
       "filter": "(?=.*(🇯🇵|日本|\bJP|\bJapan|\bJapanese))^(?!.*(0.1x|Game)).*",
-      // "icon": "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/microsoft.svg"
+      "icon": "https://raw.githubusercontent.com/clash-verge-rev/clash-verge-rev.github.io/refs/heads/main/docs/assets/icons/flags/jp.svg"
     }
   ];
 
